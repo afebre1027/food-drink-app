@@ -1,4 +1,5 @@
-const apiKey = '45fa1958465544f1a8f06e376252e2a6';
+const apiKey = '7a39ae85c03d4df3b2509f06ac35bb1f';
+const searchButton = $('#searchBtn');
 
 // global variables
 const drinkIngredients = $('.drinkIngredients');
@@ -14,7 +15,7 @@ const foodDescr = $('#foodDescription');
 const foodGroup = $('#foodGroup');
 const timeGroup = $('#timeGroup');
 
-drinkGroup.children().on('click', function (evemt) {
+drinkGroup.children().on('click', function (event) {
   event.preventDefault();
   for (let i = 0; i < drinkGroup.children().length; i++) {
     if (drinkGroup.children([i]).hasClass('pure-button-primary')) {
@@ -32,7 +33,6 @@ foodGroup.children().on('click', function () {
     }
   }
   $(this).addClass('pure-button-primary');
-  getRecipe();
 });
 
 timeGroup.children().on('click', function () {
@@ -47,8 +47,8 @@ timeGroup.children().on('click', function () {
 const getRecipe = async function () {
   let foodGroupId;
   let innerTime = '30';
-  console.log(timeGroup.find('button.pure-button-primary'));
   let innerText = $(foodGroup).find('button.pure-button-primary').attr('id');
+
   if (foodGroup.find('button.pure-button-primary')) {
     foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
   }
@@ -56,17 +56,17 @@ const getRecipe = async function () {
     console.log('hello');
     innerTime = $(timeGroup).find('button.pure-button-primary').attr('id');
   }
-  console.log(innerTime);
+
   let response = await fetch(
     `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
   );
 
   let data = await response.json();
-
+  console.log(data);
   var { title, image, id } = data.results[0];
 
   let secondResponse = await fetch(
-    `https://api.spoonacular.com/recipes/634705/information?apiKey=${apiKey}`
+    `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
   );
 
   let secondData = await secondResponse.json();
@@ -85,6 +85,8 @@ const getRecipe = async function () {
 
   postRecipe(title, image, instructions, summary, ingredients);
 };
+
+searchButton.click(getRecipe);
 
 const postRecipe = function (title, image, instructions, summary, ingredients) {
   foodTitle.html(title);
@@ -161,3 +163,49 @@ const postDrink = function (title, image, instruct, contents) {
     drinkIngredients.append(`<li>${contents[i]}</li>`);
   }
 };
+
+class Modal {
+  constructor(data) {
+    this.element = data.el;
+    this.closeModal();
+
+    return this;
+  }
+
+  open() {
+    const el = document.querySelector(this.element);
+
+    el.classList.add('open');
+  }
+
+  close() {
+    const el = document.querySelector(this.element);
+
+    el.classList.remove('open');
+  }
+
+  closeModal() {
+    const el = document.querySelector(this.element);
+
+    el.addEventListener('click', (e) => {
+      if (e.target == el) {
+        this.close();
+      }
+    });
+  }
+}
+
+const btn = document.querySelector('button');
+const closeBtn = document.querySelector('.close-button');
+
+const m = new Modal({
+  el: '#myModal',
+});
+
+btn.addEventListener('click', () => {
+  m.open();
+});
+
+closeBtn.addEventListener('click', () => {
+  m.close();
+});
