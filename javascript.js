@@ -75,3 +75,4 @@ const postDrink = function (title, image, instruct, contents) {
     drinkIngredients.append(`<li>${contents[i]}</li>`);
   }
 };
+
