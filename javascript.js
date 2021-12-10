@@ -1,3 +1,5 @@
+const apiKey = '45fa1958465544f1a8f06e376252e2a6';
+
 // global variables
 const drinkIngredients = $('.drinkIngredients');
 const drinkDescription = $('#drinkDescription');
@@ -5,7 +7,15 @@ const drinkTitle = $('#drinkTitle');
 const drinkGroup = $('.drinkGroup');
 const drinkImage = $('#drinkImage');
 
-drinkGroup.children().on('click', function () {
+const foodTitle = $('#foodTitle');
+const foodImg = $('#foodImg');
+const foodIngredients = $('.foodIngredients');
+const foodDescr = $('#foodDescription');
+const foodGroup = $('#foodGroup');
+const timeGroup = $('#timeGroup');
+
+drinkGroup.children().on('click', function (evemt) {
+  event.preventDefault();
   for (let i = 0; i < drinkGroup.children().length; i++) {
     if (drinkGroup.children([i]).hasClass('pure-button-primary')) {
       drinkGroup.children([i]).removeClass('pure-button-primary');
@@ -14,6 +24,82 @@ drinkGroup.children().on('click', function () {
   $(this).addClass('pure-button-primary');
   getDrink();
 });
+
+foodGroup.children().on('click', function () {
+  for (let i = 0; i < foodGroup.children().length; i++) {
+    if (foodGroup.children([i]).hasClass('pure-button-primary')) {
+      foodGroup.children([i]).removeClass('pure-button-primary');
+    }
+  }
+  $(this).addClass('pure-button-primary');
+  getRecipe();
+});
+
+timeGroup.children().on('click', function () {
+  for (let i = 0; i < timeGroup.children().length; i++) {
+    if (timeGroup.children([i]).hasClass('pure-button-primary')) {
+      timeGroup.children([i]).removeClass('pure-button-primary');
+    }
+  }
+  $(this).addClass('pure-button-primary');
+});
+
+const getRecipe = async function () {
+  let foodGroupId;
+  let innerTime = '30';
+  console.log(timeGroup.find('button.pure-button-primary'));
+  let innerText = $(foodGroup).find('button.pure-button-primary').attr('id');
+  if (foodGroup.find('button.pure-button-primary')) {
+    foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
+  }
+  if (timeGroup.find('button.pure-button-primary')) {
+    console.log('hello');
+    innerTime = $(timeGroup).find('button.pure-button-primary').attr('id');
+  }
+  console.log(innerTime);
+  let response = await fetch(
+    `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
+  );
+
+  let data = await response.json();
+
+  var { title, image, id } = data.results[0];
+
+  let secondResponse = await fetch(
+    `https://api.spoonacular.com/recipes/634705/information?apiKey=${apiKey}`
+  );
+
+  let secondData = await secondResponse.json();
+  const {
+    instructions,
+    summary,
+    extendedIngredients,
+    readyInMinutes: time,
+  } = secondData;
+
+  let ingredients = [];
+
+  for (let i = 0; i < extendedIngredients.length; i++) {
+    ingredients.push(extendedIngredients[i].original);
+  }
+
+  postRecipe(title, image, instructions, summary, ingredients);
+};
+
+const postRecipe = function (title, image, instructions, summary, ingredients) {
+  foodTitle.html(title);
+  foodImg.attr('src', image);
+  foodImg.removeClass('hidden');
+  if (instructions === '') {
+    foodDescr.html(summary);
+  } else {
+    foodDescr.html(instructions);
+  }
+  foodIngredients.empty();
+  for (let i = 0; i < ingredients.length; i++) {
+    foodIngredients.append(`<li>${ingredients[i]}</li>`);
+  }
+};
 
 const getDrink = async function () {
   let innerText = $(drinkGroup).find('button.pure-button-primary').attr('id');

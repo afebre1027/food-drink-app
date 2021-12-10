@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- pure.css -->
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-    <!-- google font, source code pro -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Source+Code+Pro:wght@200;300&family=Staatliches&display=swap" rel="stylesheet">
-    <!-- local stylesheet -->
-    <link rel="stylesheet" href="style.css"/>
-    <title>Food & Drink - Quick Recipes for Students</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+    integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+  <!-- google font, source code pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Source+Code+Pro:wght@200;300&family=Staatliches&display=swap"
+    rel="stylesheet">
+  <!-- local stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+  <title>Food & Drink - Quick Recipes for Students</title>
 </head>
+
 <body>
   <header class="hero pure-u-1">
     <h1>Food & Drink</h1>
@@ -21,53 +26,65 @@
   </header>
   <main class="">
     <!-- search section with search history -->
-    <div class="pure-u-1 pure-u-md-1-4">
-      <div>
-        <!-- food form -->
-        <form class="pure-form">
-           <!-- time check for food recipe 10 minute-->
-           <label for="checkbox-radio-option-one" class="pure-checkbox pure-u-1">
-            <input type="checkbox" id="checkbox-radio-option-one" value="" /> 10 minutes
-          </label>
-           <!-- time check for drink recipe 15 minutes-->
-           <label for="checkbox-radio-option-one" class="pure-checkbox pure-u-1">
-            <input type="checkbox" id="checkbox-radio-option-one" value="" /> 15 minutes
-          </label>
-           <!-- time check for drink recipe 30 minutes-->
-           <label for="checkbox-radio-option-one" class="pure-checkbox pure-u-1">
-            <input type="checkbox" id="checkbox-radio-option-one" value="" /> 30 minutes
-          </label>
-          <!-- food search by name-->
-          <label class="" for="search-food">Search food:</label>
-          <div>
-            <input id="search-food" class="pure-input-rounded" type="text" autofocus="true" aria-describedby="search-food" />
-            <button id="food-btn" class="pure-button" type="submit">Search</button>
-          </div>
-        </form>
+
+    <div class="foodContainer">
+      <h1 class="title" id="foodTitle"></h1>
+      <img id="foodImg" src="" alt="" />
+      <ul class="foodIngredients"></ul>
+      <p id="foodDescription" class="description"></p>
+      <h3>Select your Protein</h3>
+      <div id="foodGroup" role="group" aria-label="First group">
+        <button type="button" id="chicken" class="btn pure-button-secondary">
+          Chicken
+        </button>
+        <button type="button" id="beef" class="btn pure-button-secondary">Beef</button>
+        <button type="button" id="lamb" class="btn pure-button-secondary">Lamb</button>
+        <button type="button" id="fish" class="btn pure-button-secondary">Fish</button>
+        <button type="button" id="shrimp" class="btn pure-button-secondary">
+          Shrimp
+        </button>
+        <button type="button" id="turkey" class="btn pure-button-secondary">
+          Turkey
+        </button>
+        <button type="button" id="duck" class="btn pure-button-secondary">Duck</button>
+      </div>
+      <br>
+
+      <div id="timeGroup" role="group">
+        <button type="button" id="10" class="btn pure-button-secondary">10 min</button>
+        <button type="button" id="15" class="btn pure-button-secondary">15min</button>
+        <button type="button" id="30" class="btn pure-button-secondary">30min</button>
       </div>
       <div>
-        <!-- drink form -->
-        <form class="pure-form">
-          <!-- drink search by name -->
-          <label class="" for="search-drink">Search drink:</label>
-          <div>
-            <input id="search-drink" class="pure-input-rounded" type="text" autofocus="true" aria-describedby="search-drink" />
-            <button id="drink-btn" class="pure-button" type="submit">Search</button>
+        <div class="drinkContainer">
+          <h1 class="title" id="drinkTitle">
+          </h1>
+          <img src="" alt="" id="drinkImage">
+          <ul class="drinkIngredients">
+          </ul>
+          <p id="drinkDescription" class="description"></p>
+          <h3>Select you Alchol</h3>
+          <div class="drinkGroup">
+            <button id="Gin" class=" pure-button">Gin</button>
+            <button id="Vodka" class=" pure-button">Vodka</button>
+            <button id="Tequila" class=" pure-button">Tequila</button>
+            <button id="Rum" class=" pure-button">Rum</button>
+            <button id="Whiskey" class=" pure-button">Whiskey</button>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-    <!-- food and drink output section -->
-    <div class="pure-u-1 pure-u-md-3-4">
-      <div id="food-drink-output" class="col border border-dark">
-      <div id="output" class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4"></div>
-      </div>
-    </div>
+      <!-- food and drink output section -->
+      <div class="pure-u-1 pure-u-md-3-4">
+        <div id="food-drink-output" class="col border border-dark">
+          <div id="output" class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4"></div>
+        </div>
+
   </main>
   <!-- jquery script -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <!-- local js script -->
-  <script src="script.js"></script>  
+  <script src="./javascript.js"></script>
 </body>
+
 </html>
