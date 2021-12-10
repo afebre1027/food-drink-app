@@ -1,20 +1,27 @@
+// global var
 const apiKey = '7a39ae85c03d4df3b2509f06ac35bb1f';
 const searchButton = $('#searchBtn');
-
-// global variables
+// drink global
 const drinkIngredients = $('.drinkIngredients');
 const drinkDescription = $('#drinkDescription');
 const drinkTitle = $('#drinkTitle');
 const drinkGroup = $('.drinkGroup');
 const drinkImage = $('#drinkImage');
-
+// global food
 const foodTitle = $('#foodTitle');
 const foodImg = $('#foodImg');
 const foodIngredients = $('.foodIngredients');
 const foodDescr = $('#foodDescription');
 const foodGroup = $('#foodGroup');
 const timeGroup = $('#timeGroup');
+// global modal
+const modal = $('#modal');
+const modalBody = $('.modal-body');
+const closeButton = $('.close-button');
 
+// helper function for buttons
+// changes button class to primary when selected
+// removes primary from unselected buttons
 drinkGroup.children().on('click', function (event) {
   event.preventDefault();
   for (let i = 0; i < drinkGroup.children().length; i++) {
@@ -43,20 +50,20 @@ timeGroup.children().on('click', function () {
   }
   $(this).addClass('pure-button-primary');
 });
-
+// api call for recipes
 const getRecipe = async function () {
   let foodGroupId;
   let innerTime = '30';
   let innerText = $(foodGroup).find('button.pure-button-primary').attr('id');
-
+  // gets id's of selected buttons
   if (foodGroup.find('button.pure-button-primary')) {
     foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
   }
   if (timeGroup.find('button.pure-button-primary')) {
-    console.log('hello');
     innerTime = $(timeGroup).find('button.pure-button-primary').attr('id');
   }
-
+  // error handling for fetch
+  // trys to fetch data then if falis goes to catch
   try {
     let response = await fetch(
       `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
@@ -85,13 +92,16 @@ const getRecipe = async function () {
     }
 
     postRecipe(title, image, instructions, summary, ingredients);
+    // when falis opens modal to test click lamb and 15 min
   } catch {
     openModal();
   }
 };
+// the search button after clicking a food and time
 
 searchButton.click(getRecipe);
 
+// replacing html elements with data from call with recipes
 const postRecipe = function (title, image, instructions, summary, ingredients) {
   foodTitle.html(title);
   foodImg.attr('src', image);
@@ -101,12 +111,13 @@ const postRecipe = function (title, image, instructions, summary, ingredients) {
   } else {
     foodDescr.html(instructions);
   }
+  // gets rid of food list items
   foodIngredients.empty();
   for (let i = 0; i < ingredients.length; i++) {
     foodIngredients.append(`<li>${ingredients[i]}</li>`);
   }
 };
-
+// drink api call
 const getDrink = async function () {
   let innerText = $(drinkGroup).find('button.pure-button-primary').attr('id');
 
@@ -168,17 +179,11 @@ const postDrink = function (title, image, instruct, contents) {
   }
 };
 
-//  modal
-
-const modal = $('#modal');
-const modalBody = $('.modal-body');
-const closeButton = $('.close-button');
-
+//  modal functions
 function openModal() {
   modal.css('display', 'flex');
   modalBody.text('no results found');
 }
-
 function closeModal() {
   modal.css('display', 'none');
 }
