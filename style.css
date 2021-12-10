@@ -30,9 +30,6 @@ button {
 #food-drink-output {
   margin-top: 40px;
 }
-.modal.open {
-  display: flex;
-}
 
 .modal {
   display: none;

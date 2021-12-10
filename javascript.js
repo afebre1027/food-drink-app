@@ -57,33 +57,37 @@ const getRecipe = async function () {
     innerTime = $(timeGroup).find('button.pure-button-primary').attr('id');
   }
 
-  let response = await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
-  );
+  try {
+    let response = await fetch(
+      `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
+    );
 
-  let data = await response.json();
-  console.log(data);
-  var { title, image, id } = data.results[0];
+    let data = await response.json();
 
-  let secondResponse = await fetch(
-    `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
-  );
+    const { title, image, id } = data.results[0];
 
-  let secondData = await secondResponse.json();
-  const {
-    instructions,
-    summary,
-    extendedIngredients,
-    readyInMinutes: time,
-  } = secondData;
+    let secondResponse = await fetch(
+      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
+    );
 
-  let ingredients = [];
+    let secondData = await secondResponse.json();
+    const {
+      instructions,
+      summary,
+      extendedIngredients,
+      readyInMinutes: time,
+    } = secondData;
 
-  for (let i = 0; i < extendedIngredients.length; i++) {
-    ingredients.push(extendedIngredients[i].original);
+    let ingredients = [];
+
+    for (let i = 0; i < extendedIngredients.length; i++) {
+      ingredients.push(extendedIngredients[i].original);
+    }
+
+    postRecipe(title, image, instructions, summary, ingredients);
+  } catch {
+    openModal();
   }
-
-  postRecipe(title, image, instructions, summary, ingredients);
 };
 
 searchButton.click(getRecipe);
@@ -164,48 +168,18 @@ const postDrink = function (title, image, instruct, contents) {
   }
 };
 
-class Modal {
-  constructor(data) {
-    this.element = data.el;
-    this.closeModal();
+//  modal
 
-    return this;
-  }
+const modal = $('#modal');
+const modalBody = $('.modal-body');
+const closeButton = $('.close-button');
 
-  open() {
-    const el = document.querySelector(this.element);
-
-    el.classList.add('open');
-  }
-
-  close() {
-    const el = document.querySelector(this.element);
-
-    el.classList.remove('open');
-  }
-
-  closeModal() {
-    const el = document.querySelector(this.element);
-
-    el.addEventListener('click', (e) => {
-      if (e.target == el) {
-        this.close();
-      }
-    });
-  }
+function openModal() {
+  modal.css('display', 'flex');
+  modalBody.text('no results found');
 }
 
-const btn = document.querySelector('button');
-const closeBtn = document.querySelector('.close-button');
-
-const m = new Modal({
-  el: '#myModal',
-});
-
-btn.addEventListener('click', () => {
-  m.open();
-});
-
-closeBtn.addEventListener('click', () => {
-  m.close();
-});
+function closeModal() {
+  modal.css('display', 'none');
+}
+closeButton.click(closeModal);
