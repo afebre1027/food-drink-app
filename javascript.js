@@ -179,6 +179,7 @@ const postDrink = function (title, image, instruct, contents) {
   }
 };
 
+
 //  modal functions
 function openModal() {
   modal.css('display', 'flex');
@@ -188,3 +189,4 @@ function closeModal() {
   modal.css('display', 'none');
 }
 closeButton.click(closeModal);
+
