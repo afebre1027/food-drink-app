@@ -1,11 +1,29 @@
-// global variables
+// global var
+const apiKey = '7a39ae85c03d4df3b2509f06ac35bb1f';
+const searchButton = $('#searchBtn');
+// drink global
 const drinkIngredients = $('.drinkIngredients');
 const drinkDescription = $('#drinkDescription');
 const drinkTitle = $('#drinkTitle');
 const drinkGroup = $('.drinkGroup');
 const drinkImage = $('#drinkImage');
+// global food
+const foodTitle = $('#foodTitle');
+const foodImg = $('#foodImg');
+const foodIngredients = $('.foodIngredients');
+const foodDescr = $('#foodDescription');
+const foodGroup = $('#foodGroup');
+const timeGroup = $('#timeGroup');
+// global modal
+const modal = $('#modal');
+const modalBody = $('.modal-body');
+const closeButton = $('.close-button');
 
-drinkGroup.children().on('click', function () {
+// helper function for buttons
+// changes button class to primary when selected
+// removes primary from unselected buttons
+drinkGroup.children().on('click', function (event) {
+  event.preventDefault();
   for (let i = 0; i < drinkGroup.children().length; i++) {
     if (drinkGroup.children([i]).hasClass('pure-button-primary')) {
       drinkGroup.children([i]).removeClass('pure-button-primary');
@@ -15,6 +33,91 @@ drinkGroup.children().on('click', function () {
   getDrink();
 });
 
+foodGroup.children().on('click', function () {
+  for (let i = 0; i < foodGroup.children().length; i++) {
+    if (foodGroup.children([i]).hasClass('pure-button-primary')) {
+      foodGroup.children([i]).removeClass('pure-button-primary');
+    }
+  }
+  $(this).addClass('pure-button-primary');
+});
+
+timeGroup.children().on('click', function () {
+  for (let i = 0; i < timeGroup.children().length; i++) {
+    if (timeGroup.children([i]).hasClass('pure-button-primary')) {
+      timeGroup.children([i]).removeClass('pure-button-primary');
+    }
+  }
+  $(this).addClass('pure-button-primary');
+});
+// api call for recipes
+const getRecipe = async function () {
+  let foodGroupId;
+  let innerTime = '30';
+  let innerText = $(foodGroup).find('button.pure-button-primary').attr('id');
+  // gets id's of selected buttons
+  if (foodGroup.find('button.pure-button-primary')) {
+    foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
+  }
+  if (timeGroup.find('button.pure-button-primary')) {
+    innerTime = $(timeGroup).find('button.pure-button-primary').attr('id');
+  }
+  // error handling for fetch
+  // trys to fetch data then if falis goes to catch
+  try {
+    let response = await fetch(
+      `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
+    );
+
+    let data = await response.json();
+
+    const { title, image, id } = data.results[0];
+
+    let secondResponse = await fetch(
+      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
+    );
+
+    let secondData = await secondResponse.json();
+    const {
+      instructions,
+      summary,
+      extendedIngredients,
+      readyInMinutes: time,
+    } = secondData;
+
+    let ingredients = [];
+
+    for (let i = 0; i < extendedIngredients.length; i++) {
+      ingredients.push(extendedIngredients[i].original);
+    }
+
+    postRecipe(title, image, instructions, summary, ingredients);
+    // when falis opens modal to test click lamb and 15 min
+  } catch {
+    openModal();
+  }
+};
+// the search button after clicking a food and time
+
+searchButton.click(getRecipe);
+
+// replacing html elements with data from call with recipes
+const postRecipe = function (title, image, instructions, summary, ingredients) {
+  foodTitle.html(title);
+  foodImg.attr('src', image);
+  foodImg.removeClass('hidden');
+  if (instructions === '') {
+    foodDescr.html(summary);
+  } else {
+    foodDescr.html(instructions);
+  }
+  // gets rid of food list items
+  foodIngredients.empty();
+  for (let i = 0; i < ingredients.length; i++) {
+    foodIngredients.append(`<li>${ingredients[i]}</li>`);
+  }
+};
+// drink api call
 const getDrink = async function () {
   let innerText = $(drinkGroup).find('button.pure-button-primary').attr('id');
 
@@ -75,3 +178,13 @@ const postDrink = function (title, image, instruct, contents) {
     drinkIngredients.append(`<li>${contents[i]}</li>`);
   }
 };
+
+//  modal functions
+function openModal() {
+  modal.css('display', 'flex');
+  modalBody.text('no results found');
+}
+function closeModal() {
+  modal.css('display', 'none');
+}
+closeButton.click(closeModal);
