@@ -12,9 +12,9 @@ This application allows users to search different food  recipes as well as mixtu
 -Modals
 
 ### Screenshot:
-
+![food-app](https://user-images.githubusercontent.com/45181939/145735851-ab2feaca-7ed3-4f45-83c9-a866a3b78bce.png)
 
 
 ### Deployed Link:
-
+https://afebre1027.github.io/food-drink-app/
 
