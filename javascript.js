@@ -31,7 +31,7 @@ drinkGroup.children().on('click', function (event) {
       drinkGroup.children([i]).removeClass('pure-button-primary');
     }
   }
-  
+
   $(this).addClass('pure-button-primary');
   getDrink();
 });
@@ -95,8 +95,8 @@ const getRecipe = async function () {
       ingredients.push(extendedIngredients[i].original);
     }
 
-    if(secondData){
-      addHistory(id);
+    if (secondData) {
+      addHistory({name: "food", id: id});
     }
 
     postRecipe(title, image, instructions, summary, ingredients);
@@ -143,8 +143,8 @@ const getDrink = async function () {
 
   const { strDrink: title, strDrinkThumb: image, idDrink } = drink;
   //add to search history
-  if(drink){
-    addHistory(idDrink);
+  if (drink) {
+    addHistory({name: "drink", id: idDrink});
   }
 
   let secondResponse = await fetch(
@@ -190,25 +190,35 @@ const postDrink = function (title, image, instruct, contents) {
   }
 };
 
-// history functions
-function addHistory(id){
-  if(localStorage.getItem('search-history')){
-    let oldArr = JSON.parse(localStorage.getItem('search-history'));
-    oldArr.filter(item => {
-      if(!oldArr.includes(item)){
-         historyArr.push(item)
-      }
-    })    
-  };
-
-  if(!historyArr.includes(id)){
-    historyArr.push(id);
+// History Functions - D
+// ===========================
+function addHistory({name, id}){
+  //check to see
+  if (!localStorage.getItem('search-history')){
+    historyArr.push({name, id});
+    localStorage.setItem('search-history', JSON.stringify(historyArr));
+    return;
   }
-  localStorage.setItem('search-history', JSON.stringify(historyArr))
+  // check our localstorage against our history arr
+  JSON.parse(localStorage.getItem('search-history')).map(oldItem => {
+    if(historyArr.some(item => item.id == oldItem.id)){
+      console.log('array exists in history array')
+    }else{
+    historyArr.push({name: oldItem.name, id: oldItem.id})
+    }
+  })
+  // check our query from the button click against our history arr
+  if(historyArr.some(item => item.id == id)){
+    return;
+  }else{
+    historyArr.push({name, id})
+  }
+  localStorage.setItem('search-history', JSON.stringify(historyArr));
 }
 
-function showhistory(){
-  console.log(JSON.parse(localStorage.getItem('search-history')));
+function showHistory(){
+  // Show our cards here
+
 }
 
 //  modal functions
