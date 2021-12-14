@@ -72,6 +72,16 @@ main {
   color: #000;
 }
 
+/* Search History Btn */
+a{
+  text-decoration: none;
+}
+.search-history {
+    width: 100%;
+    margin-bottom: 10px !important;
+    color: #ccc;
+}
+
 /* food settings */
 .foodContainer {
   text-align: center;
