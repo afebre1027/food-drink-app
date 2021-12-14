@@ -21,6 +21,12 @@ main {
   margin-left: 160px;
   padding: 0px 10px;
 }
+.full-width{
+  width:100%;
+}
+.text-center{
+  text-align:center;
+}
 /* hero settings */
 .hero {
   background-image: url(./img/hero2.jpg);
@@ -77,8 +83,7 @@ a{
   text-decoration: none;
 }
 .search-history {
-    width: 100%;
-    margin-bottom: 10px !important;
+    margin: 0 0 10px 0 !important;
     color: #ccc;
 }
 
@@ -116,7 +121,6 @@ Img {
 }
 
 /* drink container */
-
 .drinkContainer {
   text-align: center;
   display: flex;
@@ -135,7 +139,6 @@ Img {
 
 
 /* modal style area */
-
 .modal {
   display: none;
   position: fixed;
@@ -190,4 +193,18 @@ Img {
   font: size 25px;
   display: block;
   text-decoration: none;
+}
+
+/* ==========================
+      search history page - D
+   ==========================
+*/
+
+/* results*/
+.result-container{
+  width:100%;
+  min-height: 350px;
+}
+.no-result{
+  padding:20px;
 }

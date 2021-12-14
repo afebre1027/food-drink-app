@@ -18,6 +18,8 @@ const timeGroup = $('#timeGroup');
 const modal = $('#modal');
 const modalBody = $('.modal-body');
 const closeButton = $('.close-button');
+//global array - D
+let historyArr = [];
 
 // helper function for buttons
 // changes button class to primary when selected
@@ -56,6 +58,7 @@ const getRecipe = async function () {
   let foodGroupId;
   let innerTime = '30';
   let innerText = $(foodGroup).find('button.pure-button-primary').attr('id');
+
   // gets id's of selected buttons
   if (foodGroup.find('button.pure-button-primary')) {
     foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
@@ -90,6 +93,10 @@ const getRecipe = async function () {
 
     for (let i = 0; i < extendedIngredients.length; i++) {
       ingredients.push(extendedIngredients[i].original);
+    }
+
+    if(secondData){
+      addHistory(id);
     }
 
     postRecipe(title, image, instructions, summary, ingredients);
@@ -135,6 +142,10 @@ const getDrink = async function () {
   // desctructuring the object so i can rename
 
   const { strDrink: title, strDrinkThumb: image, idDrink } = drink;
+  //add to search history
+  if(drink){
+    addHistory(idDrink);
+  }
 
   let secondResponse = await fetch(
     `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`
@@ -178,6 +189,27 @@ const postDrink = function (title, image, instruct, contents) {
     drinkIngredients.append(`<li>${contents[i]}</li>`);
   }
 };
+
+// history functions
+function addHistory(id){
+  if(localStorage.getItem('search-history')){
+    let oldArr = JSON.parse(localStorage.getItem('search-history'));
+    oldArr.filter(item => {
+      if(!oldArr.includes(item)){
+         historyArr.push(item)
+      }
+    })    
+  };
+
+  if(!historyArr.includes(id)){
+    historyArr.push(id);
+  }
+  localStorage.setItem('search-history', JSON.stringify(historyArr))
+}
+
+function showhistory(){
+  console.log(JSON.parse(localStorage.getItem('search-history')));
+}
 
 //  modal functions
 function openModal() {

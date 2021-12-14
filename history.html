@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- pure.css -->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+    integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <!-- font awesome -->
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <!-- local stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <title>Food & Drink - History</title>
+</head>
+<body onload="showhistory()">
+    <header class="hero pure-u-1">
+        <h1 class="heroText-h1">Time to Dine!</h1>
+        <h2 class="heroText-h2">Quick Recipes for Students</h2>
+    </header>
+    <div class="sidebar">
+        <a href="./index.html">
+            <button class="pure-button button search-history full-width">Back to Recipes</button>
+        </a>
+        <div class="search-input">
+            <div class="search-input-container">
+                <input type="text" id="search-recipes" class="input-search" />
+                <button type="button" class="pure-button full-width">Search</button>
+                <span id="error-msg"></span>
+            </div>      
+        </div>
+    </div>
+    <main>
+        <div class="result-container">
+           <h2 class="text-center no-result">Nothing in history, comeback after you find a recipe</h2>
+        </div>
+ <!-- jquery script -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!-- local js script -->
+  <script src="./javascript.js"></script>
+    </main>
+</body>
+</html>
