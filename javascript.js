@@ -99,7 +99,6 @@ const getRecipe = async function () {
   }
 };
 // the search button after clicking a food and time
-
 searchButton.click(getRecipe);
 
 // replacing html elements with data from call with recipes
@@ -120,29 +119,32 @@ const postRecipe = function (title, image, instructions, summary, ingredients) {
 };
 // drink api call
 const getDrink = async function () {
-  let innerText = $(drinkGroup).find('#search-drink').val();
+  let innerText = $(drinkGroup).find('button.pure-button-primary').attr('id');
 
-  // this api call only gets title,id and image 
+  // this api call only gets title,id and image
   let response = await fetch(
     `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${innerText}`
-  )
+  );
 
   let data = await response.json();
-  
+
   // chooseing one random drink from the list
+
   let drink = data.drinks[Math.floor(Math.random() * data.drinks.length)];
 
   // desctructuring the object so i can rename
+
   const { strDrink: title, strDrinkThumb: image, idDrink } = drink;
 
   let secondResponse = await fetch(
     `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`
-  )
-
+  );
   let secondData = await secondResponse.json();
+
   const { strInstructions: instruct } = secondData.drinks[0];
-  
+
   // they define the ingredients weird so i have to do this to get what i need
+
   let contents = [];
 
   for (let i = 1; i <= 15; i++) {
@@ -154,12 +156,13 @@ const getDrink = async function () {
     if (ingredient && measurement) {
       contents.push(`${measurement} ${ingredient}`);
     }
-    // if the measurment does not exist but ingredients exist push ingredients
+    // if the measr dont exist but ingre push ingre
     // example salt to taste
     if (!measurement && ingredient) {
       contents.push(ingredient);
     }
   }
+
   postDrink(title, image, instruct, contents);
 };
 
@@ -176,6 +179,7 @@ const postDrink = function (title, image, instruct, contents) {
   }
 };
 
+
 //  modal functions
 function openModal() {
   modal.css('display', 'flex');
@@ -185,4 +189,3 @@ function closeModal() {
   modal.css('display', 'none');
 }
 closeButton.click(closeModal);
-
