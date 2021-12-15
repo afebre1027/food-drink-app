@@ -21,6 +21,12 @@ main {
   margin-left: 160px;
   padding: 0px 10px;
 }
+.full-width{
+  width:100%;
+}
+.text-center{
+  text-align:center;
+}
 /* hero settings */
 .hero {
   background-image: url(./img/hero2.jpg);
@@ -63,14 +69,22 @@ main {
   text-decoration: none;
   background-color: transparent;
   color: #ccc;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande","Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .sidebar button:hover {
   border: 1px solid #ccc;
   border-radius: 3px;
   background-color: #ccc;
   color: #000;
+}
+
+/* Search History Btn */
+a{
+  text-decoration: none;
+}
+.search-history {
+    margin: 0 0 10px 0 !important;
+    color: #ccc;
 }
 
 /* food settings */
@@ -108,7 +122,6 @@ Img {
 }
 
 /* drink container */
-
 .drinkContainer {
   text-align: center;
   display: flex;
@@ -127,7 +140,6 @@ Img {
 
 
 /* modal style area */
-
 .modal {
   display: none;
   position: fixed;
@@ -182,4 +194,18 @@ Img {
   font: size 25px;
   display: block;
   text-decoration: none;
+}
+
+/* ==========================
+      search history page - D
+   ==========================
+*/
+
+/* results*/
+.result-container{
+  width:100%;
+  min-height: 350px;
+}
+.no-result{
+  padding:20px;
 }
