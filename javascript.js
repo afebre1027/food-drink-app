@@ -18,6 +18,8 @@ const timeGroup = $('#timeGroup');
 const modal = $('#modal');
 const modalBody = $('.modal-body');
 const closeButton = $('.close-button');
+//global array - D
+let historyArr = [];
 
 // helper function for buttons
 // changes button class to primary when selected
@@ -29,6 +31,7 @@ drinkGroup.children().on('click', function (event) {
       drinkGroup.children([i]).removeClass('pure-button-primary');
     }
   }
+
   $(this).addClass('pure-button-primary');
   getDrink();
 });
@@ -55,6 +58,7 @@ const getRecipe = async function () {
   let foodGroupId;
   let innerTime = '30';
   let innerText = $(foodGroup).find('button.pure-button-primary').attr('id');
+
   // gets id's of selected buttons
   if (foodGroup.find('button.pure-button-primary')) {
     foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
@@ -91,6 +95,10 @@ const getRecipe = async function () {
       ingredients.push(extendedIngredients[i].original);
     }
 
+    if (secondData) {
+      addHistory({name: "food", id: id});
+    }
+
     postRecipe(title, image, instructions, summary, ingredients);
     // when falis opens modal to test click lamb and 15 min
   } catch {
@@ -98,7 +106,6 @@ const getRecipe = async function () {
   }
 };
 // the search button after clicking a food and time
-
 searchButton.click(getRecipe);
 
 // replacing html elements with data from call with recipes
@@ -135,6 +142,10 @@ const getDrink = async function () {
   // desctructuring the object so i can rename
 
   const { strDrink: title, strDrinkThumb: image, idDrink } = drink;
+  //add to search history
+  if (drink) {
+    addHistory({name: "drink", id: idDrink});
+  }
 
   let secondResponse = await fetch(
     `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`
@@ -179,6 +190,36 @@ const postDrink = function (title, image, instruct, contents) {
   }
 };
 
+// History Functions - D
+// ===========================
+function addHistory({name, id}){
+  //check to see
+  if (!localStorage.getItem('search-history')){
+    historyArr.push({name, id});
+    localStorage.setItem('search-history', JSON.stringify(historyArr));
+    return;
+  }
+  // check our localstorage against our history arr
+  JSON.parse(localStorage.getItem('search-history')).map(oldItem => {
+    if(historyArr.some(item => item.id == oldItem.id)){
+      console.log('array exists in history array')
+    }else{
+    historyArr.push({name: oldItem.name, id: oldItem.id})
+    }
+  })
+  // check our query from the button click against our history arr
+  if(historyArr.some(item => item.id == id)){
+    return;
+  }else{
+    historyArr.push({name, id})
+  }
+  localStorage.setItem('search-history', JSON.stringify(historyArr));
+}
+
+function showHistory(){
+  // Show our cards here
+
+}
 
 //  modal functions
 function openModal() {
@@ -189,4 +230,3 @@ function closeModal() {
   modal.css('display', 'none');
 }
 closeButton.click(closeModal);
-
