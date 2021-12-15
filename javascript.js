@@ -1,5 +1,5 @@
 // global var
-const apiKey = '7a39ae85c03d4df3b2509f06ac35bb1f';
+const apiKey = 'fa803a1948e349ff93d5f018cb9228fa';
 const searchButton = $('#searchBtn');
 // drink global
 const drinkIngredients = $('.drinkIngredients');

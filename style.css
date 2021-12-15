@@ -21,13 +21,14 @@ main {
   margin-left: 160px;
   padding: 0px 10px;
 }
+
 /* hero settings */
 .hero {
   background-image: url(./img/hero2.jpg);
   background-repeat: no-repeat;
   background-position: fixed;
   background-size: cover;
-  height: 200px;
+  height: 150px;
   width: 100%;
   color: #ccc;
 }
@@ -40,23 +41,25 @@ main {
   padding: 0px 100px 10px 100px;
 }
 
-/* sidebar & buttons */
+/* sidebar & buttons*/
 .sidebar {
   height: 100%;
   width: 160px;
   position: fixed;
-  top: 20;
+  top: 10;
   left: 0;
   overflow-x: hidden;
   padding-top: 20px;
-  background-color: #000 !important;
+  background-color: #000;
   color: #ccc;
 }
 .sidebar h2 {
   text-align: center;
+  font-size: 25px;
+  padding: 5px;
 }
 .sidebar button {
-  padding: 10px 8px 6px 16px;
+  padding: 6px 8px 6px 16px;
   margin: 1px;
   font-size: 15px;
   display: block;
@@ -71,6 +74,13 @@ main {
   border-radius: 3px;
   background-color: #ccc;
   color: #000;
+}
+#searchBtn {
+  text-align: center;
+  border-radius: 20px;
+  font-size: large;
+  display:flex;
+  align-items: center;
 }
 
 /* food settings */
@@ -103,10 +113,6 @@ Img {
   border-radius: 40px;
 }
 
-#food-drink-output {
-  margin-top: 40px;
-}
-
 /* drink container */
 
 .drinkContainer {
@@ -118,13 +124,16 @@ Img {
   border-bottom: 1px solid black;
   border-top: 1px solid black;
   border-radius: 20px;
+  padding: 10px;
 }
 .drinkGroup {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
-
+#food-drink-output {
+  margin-top: 40px;
+}
 
 /* modal style area */
 
@@ -163,23 +172,4 @@ Img {
 
 .modal .close-button:hover {
   color: #000;
-}
-
-/* sidebar */
-.sidebar {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  top: 20;
-  left: 0;
-  background-color: #ffff;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-.sidebar button {
-  padding: 10px 8px 6px 16px;
-  margin: 1px;
-  font: size 25px;
-  display: block;
-  text-decoration: none;
 }
