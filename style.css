@@ -33,7 +33,7 @@ main {
   background-repeat: no-repeat;
   background-position: fixed;
   background-size: cover;
-  height: 150px;
+  height: 200px;
   width: 100%;
   color: #ccc;
 }
@@ -43,7 +43,7 @@ main {
 }
 .heroText-h2 {
   text-align: left;
-  padding: 0px 100px 10px 50px;
+  padding: 0px 100px 10px 100px;
 }
 
 /* sidebar & buttons */
@@ -112,8 +112,9 @@ a{
 
 Img {
   border-radius: 20px;
-  width: 20%;
+  width: 30%;
   padding: 20px;
+  border-radius: 40px;
 }
 
 #food-drink-output {
