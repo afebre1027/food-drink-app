@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +13,6 @@
   <link rel="stylesheet" href="style.css">
   <title>Food & Drink - Quick Recipes for Students</title>
 </head>
-
 <body>
 
   <header class="hero pure-u-1">
@@ -22,10 +20,10 @@
     <h2 class="heroText-h2">Quick Recipes for Students</h2>
   </header>
   <div class="sidebar">
-    <a href="./history.html">
-      <button class="pure-button search-history button full-width">Search History</button>
-    </a>
-    <div class="drinkGroup">
+      <!-- <a href="./history.html">
+        <button class="pure-button search-history button full-width">Search History</button>
+      </a> -->
+      <div class="drinkGroup">
       <h2>Select your Alcohol</h2>
       <button id="Gin" class=" pure-button">Gin</button>
       <button id="Vodka" class=" pure-button">Vodka</button>
@@ -49,8 +47,9 @@
       <button type="button" id="shrimp" class="pure-button">Shrimp</button>
       <button type="button" id="turkey" class="pure-button">Turkey</button>
       <button type="button" id="duck" class="pure-button">Duck</button>
+      <button type='button' id='searchBtn' class='pure-button'><i class="icon-search"></i>
+      </button>
     </div>
-
   </div>
   <main>
     <!-- drink form -->
@@ -69,7 +68,6 @@
       <ul class="foodIngredients"></ul> <br />
       <p id="foodDescription" class="description"></p>
     </div>
-    <button type='button' id='searchBtn' class='pure-button'>Search</button>
     </div>
     <div class="pure-u-1 pure-u-md-3-4">
       <div id="food-drink-output" class="col border border-dark">
@@ -85,11 +83,13 @@
       </div>
     </div>
   </main>
+  <a href="./history.html">
+    <button class="pure-button search-history button full-width">Search History</button>
+  </a>
   <!-- jquery script -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <!-- local js script -->
   <script src="./javascript.js"></script>
 </body>
-
 </html>
