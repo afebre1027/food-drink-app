@@ -79,8 +79,6 @@ main {
   background-color: #ccc;
   color: #000;
 }
-
-
 /* Search History Btn */
 a{
   text-decoration: none;
@@ -139,6 +137,16 @@ Img {
 }
 #food-drink-output {
   margin-top: 40px;
+}
+
+/* recent search button */
+.search-history {
+font-size: 20px;
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+background-color: #ccc;
+width:100%;
 }
 
 /* modal style area */
