@@ -222,10 +222,8 @@ function addHistory({ name, id }) {
   localStorage.setItem('search-history', JSON.stringify(historyArr));
 }
 
-function showHistory() {
-  localStorage.getItem(addHistory());
-  console.log(showHistory());
-  // Show our cards here
+function showhistory(){
+  console.log(JSON.parse(localStorage.getItem('search-history')));
 }
 
 //  modal functions

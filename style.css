@@ -79,6 +79,15 @@ main {
   background-color: #ccc;
   color: #000;
 }
+#searchBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  float: right;
+  padding: 5px;
+  margin: 0px;
+  width: 100%;
+}
 /* Search History Btn */
 a{
   text-decoration: none;
@@ -96,7 +105,7 @@ a{
   flex-direction: column;
   justify-content: space-evenly;
   border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   border-radius: 20px;
 }
 
