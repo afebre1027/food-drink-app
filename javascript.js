@@ -18,7 +18,7 @@ const timeGroup = $('#timeGroup');
 const modal = $('#modal');
 const modalBody = $('.modal-body');
 const closeButton = $('.close-button');
-//global array - D
+//global array
 let historyArr = [];
 
 // helper function for buttons
@@ -31,12 +31,12 @@ drinkGroup.children().on('click', function (event) {
       drinkGroup.children([i]).removeClass('pure-button-primary');
     }
   }
-
   $(this).addClass('pure-button-primary');
   getDrink();
 });
 
-foodGroup.children().on('click', function () {
+foodGroup.children().on('click', function (event) {
+  event.preventDefault();
   for (let i = 0; i < foodGroup.children().length; i++) {
     if (foodGroup.children([i]).hasClass('pure-button-primary')) {
       foodGroup.children([i]).removeClass('pure-button-primary');
@@ -61,20 +61,25 @@ const getRecipe = async function () {
 
   // gets id's of selected buttons
   if (foodGroup.find('button.pure-button-primary')) {
+    console.log('test1');
     foodGroupId = $(foodGroup).find('button.pure-button-primary').attr('id');
   }
   if (timeGroup.find('button.pure-button-primary')) {
+    console.log('test2');
     innerTime = $(timeGroup).find('button.pure-button-primary').attr('id');
   }
   // error handling for fetch
   // trys to fetch data then if falis goes to catch
   try {
+    console.log(innerTime);
+    console.log(innerText);
+    console.log(apiKey);
     let response = await fetch(
       `https://api.spoonacular.com/recipes/complexSearch?maxReadyTime=${innerTime}&apiKey=${apiKey}&query=${innerText}&number=1`
     );
 
     let data = await response.json();
-
+    console.log(data);
     const { title, image, id } = data.results[0];
 
     let secondResponse = await fetch(
@@ -82,6 +87,7 @@ const getRecipe = async function () {
     );
 
     let secondData = await secondResponse.json();
+    console.log(secondData);
     const {
       instructions,
       summary,
@@ -96,7 +102,7 @@ const getRecipe = async function () {
     }
 
     if (secondData) {
-      addHistory({name: "food", id: id});
+      addHistory({ name: 'food', id: id });
     }
 
     postRecipe(title, image, instructions, summary, ingredients);
@@ -144,7 +150,7 @@ const getDrink = async function () {
   const { strDrink: title, strDrinkThumb: image, idDrink } = drink;
   //add to search history
   if (drink) {
-    addHistory({name: "drink", id: idDrink});
+    addHistory({ name: 'drink', id: idDrink });
   }
 
   let secondResponse = await fetch(
@@ -192,33 +198,32 @@ const postDrink = function (title, image, instruct, contents) {
 
 // History Functions - D
 // ===========================
-function addHistory({name, id}){
+function addHistory({ name, id }) {
   //check to see
-  if (!localStorage.getItem('search-history')){
-    historyArr.push({name, id});
+  if (!localStorage.getItem('search-history')) {
+    historyArr.push({ name, id });
     localStorage.setItem('search-history', JSON.stringify(historyArr));
     return;
   }
   // check our localstorage against our history arr
-  JSON.parse(localStorage.getItem('search-history')).map(oldItem => {
-    if(historyArr.some(item => item.id == oldItem.id)){
-      console.log('array exists in history array')
-    }else{
-    historyArr.push({name: oldItem.name, id: oldItem.id})
+  JSON.parse(localStorage.getItem('search-history')).map((oldItem) => {
+    if (historyArr.some((item) => item.id == oldItem.id)) {
+      console.log('array exists in history array');
+    } else {
+      historyArr.push({ name: oldItem.name, id: oldItem.id });
     }
-  })
+  });
   // check our query from the button click against our history arr
-  if(historyArr.some(item => item.id == id)){
+  if (historyArr.some((item) => item.id == id)) {
     return;
-  }else{
-    historyArr.push({name, id})
+  } else {
+    historyArr.push({ name, id });
   }
   localStorage.setItem('search-history', JSON.stringify(historyArr));
 }
 
-function showHistory(){
+function showHistory() {
   // Show our cards here
-
 }
 
 //  modal functions
