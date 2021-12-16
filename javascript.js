@@ -220,10 +220,10 @@ function addHistory({ name, id }) {
     historyArr.push({ name, id });
   }
   localStorage.setItem('search-history', JSON.stringify(historyArr));
+ 
 }
 
 function showhistory(){
-  console.log(JSON.parse(localStorage.getItem('search-history')));
 }
 
 //  modal functions
