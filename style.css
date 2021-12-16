@@ -147,6 +147,8 @@ justify-content: space-evenly;
 align-items: center;
 background-color: #ccc;
 width:100%;
+margin-left: 70px;
+
 }
 
 /* modal style area */
@@ -200,4 +202,7 @@ width:100%;
 }
 .no-result{
   padding:20px;
+}
+input {
+  width: 100%;
 }

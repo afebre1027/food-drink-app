@@ -223,6 +223,8 @@ function addHistory({ name, id }) {
 }
 
 function showHistory() {
+  localStorage.getItem(addHistory());
+  console.log(showHistory());
   // Show our cards here
 }
 
